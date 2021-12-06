@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="MongoDb" id="Project-249d" database="MongoDb" >
+	<schema name="spotify" >
+		<table name="album" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="canciones" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<column name="artista" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="titulo" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="any_publicacion" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="img_portada" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+		</table>
+		<table name="credito" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="numero_tarjeta" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="mes" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="anio" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="codigo_seguridad" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="usuario_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="pagos" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+		</table>
+		<table name="pagos" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="fecha" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="num_orden" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="total" type="double" length="800" decimal="0" jt="8" mandatory="y" />
+			<column name="usuario_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_pagos_credito" virtual="y" to_schema="spotify" to_table="credito" >
+				<fk_column name="_id" pk="pagos" />
+			</fk>
+		</table>
+		<table name="paypal" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="nombre_usuario" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="pagos" type="object" length="800" decimal="0" jt="4999544" mandatory="y" />
+			<column name="usuario_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_paypal_suscripciones" virtual="y" to_schema="spotify" to_table="suscripciones" >
+				<fk_column name="_id" pk="pagos" />
+			</fk>
+		</table>
+		<table name="playlist" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="titulo" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="cantidad_canciones" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="fecha_creacion" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="activa" type="boolean" length="800" decimal="0" jt="16" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+		</table>
+		<table name="playlist_activa" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="plaulist_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="canciones" type="array[object]" length="800" decimal="0" jt="4999545" mandatory="y" >
+				<column name="cancion_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+				<column name="usuario_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+				<column name="fecha_creacion" type="string" length="800" decimal="0" jt="12" />
+				<column name="fecha_elimininacion" type="string" length="800" decimal="0" jt="12" />
+			</column>
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_playlist_activa_playlist" virtual="y" to_schema="spotify" to_table="playlist" >
+				<fk_column name="_id" pk="activa" />
+			</fk>
+			<fk name="fk_playlist_activa_album" virtual="y" to_schema="spotify" to_table="album" >
+				<fk_column name="canciones" pk="canciones" />
+			</fk>
+		</table>
+		<table name="playlist_eliminada" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="playlist_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="fecha_eliminacion" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+		</table>
+		<table name="suscripciones" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="fecha_inicio" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="fecha_renovacion" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="pagos" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_suscripciones_credito" virtual="y" to_schema="spotify" to_table="credito" >
+				<fk_column name="pagos" pk="pagos" />
+			</fk>
+			<fk name="fk_suscripciones" virtual="y" to_schema="spotify" to_table="usuario_premium" >
+				<fk_column name="_id" pk="suscripsiones" />
+			</fk>
+		</table>
+		<table name="usuario_premium" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="usuario_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="suscripsiones" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<column name="credito" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="paypal" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="pagos" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+		</table>
+		<table name="usuarios" >
+			<column name="_id" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="email" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="password" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="nombre" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="fecha_nac" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="sexo" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="pais" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="cod_postal" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="tipo_usuario" type="string" length="800" decimal="0" jt="12" mandatory="y" />
+			<column name="playlist" type="int" length="800" decimal="0" jt="4" mandatory="y" />
+			<column name="lista_albums" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<column name="lista_canciones" type="array" length="800" decimal="0" jt="4999545" mandatory="y" />
+			<index name="_id_" unique="PRIMARY_KEY" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_usuarios_usuario_premium" virtual="y" to_schema="spotify" to_table="usuario_premium" />
+			<fk name="fk_usuarios_pagos" virtual="y" to_schema="spotify" to_table="pagos" >
+				<fk_column name="_id" pk="usuario_id" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="MongoDb" database="MongoDb" driver_class="com.dbschema.MongoJdbcDriver" driver_jar="mongojdbc3.1.jar" driver_desc="No Authentication" host="localhost" port="27017" instance="spotify" user="admin" />
+	<layout name="Main Layout" id="Layout-de2" show_relation="name" >
+		<entity schema="spotify" name="album" color="3986C1" x="736" y="448" />
+		<entity schema="spotify" name="playlist_activa" column="canciones" color="3986C1" x="512" y="416" />
+		<entity schema="spotify" name="credito" color="3986C1" x="688" y="192" />
+		<entity schema="spotify" name="pagos" color="3986C1" x="864" y="112" />
+		<entity schema="spotify" name="paypal" color="3986C1" x="688" y="48" />
+		<entity schema="spotify" name="playlist" color="3986C1" x="48" y="400" />
+		<entity schema="spotify" name="playlist_activa" color="3986C1" x="304" y="416" />
+		<entity schema="spotify" name="playlist_eliminada" color="3986C1" x="288" y="288" />
+		<entity schema="spotify" name="suscripciones" color="3986C1" x="464" y="96" />
+		<entity schema="spotify" name="usuario_premium" color="3986C1" x="288" y="96" />
+		<entity schema="spotify" name="usuarios" color="3986C1" x="112" y="96" />
+		<script name="Sample" id="Editor-26b" language="SQL" >
+			<string><![CDATA[db.sampleCollection.insert({"SampleKey":"SampleValue"});
+
+db.usuarios.insert({"_id" : 1, "email": "demo@gmail.com", "password":"5678", "nombre": "jaimito", "fecha_nac": "2006-05-03",
+"sexo": "M", "pais": "canada", "cod_postal":08006, "tipo_usuario":"premium", "playlist":1,"lista_albums":[1,2],"lista_canciones":[1]})
+
+db.usuario_premium.insert({"_id":1, "usuario_id":1, "suscripsiones":[1], "credito":1, "paypal":null, "pagos":[1]})
+
+db.suscripciones.insert({"_id":1,"fecha_inicio" : "2008-03-05", "fecha_renovacion":"2010-06-02", "pagos":[1]})
+
+db.credito.insert({"_id":1,"numero_tarjeta": "1234 5689 1456", "mes":"03","anio":2022, "codigo_seguridad":123, "usuario_id":1, pagos:[1]})
+
+db.paypal.insert({"_id":1, "nombre_usuario":"ana", "pagos":{}, "usuario_id":1})
+
+db.pagos.insert({"_id":1, "fecha":"2010-03-05", "num_orden":15, "total":57.2, "usuario_id":1})
+
+db.playlist_activa.insert({"_id":1, "plaulist_id": 1, "canciones":[
+{"cancion_id":1, "usuario_id":1,"fecha_creacion":"2015-10-06"},
+{"cancion_id":2, "usuario_id":1,"fecha_elimininacion":"2015-10-30"}
+]})
+
+db.playlist_eliminada.insert({"_id":1, "playlist_id": 1, "fecha_eliminacion":"2015-10-30"})
+
+db.playlist.insert({"_id": 1, "titulo": "romantica", "cantidad_canciones" : 16, "fecha_creacion":"2010-06-02", "activa": true})
+
+db.album.insert({"_id":1,"canciones":[1,2], "artista": "Marc Anthony", "titulo": "Libre", "any_publicacion": "1999", "img_portada":"vida.jpg"})
+
+db.cancion.insert({"_id":1, "titulo":"vida", "duracion":1.3, "cant_reprod" : 5})]]></string>
+		</script>
+	</layout>
+</project>

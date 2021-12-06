@@ -1,0 +1,4 @@
+{"_id":1, "plaulist_id": 1, "canciones":[
+{"cancion_id":1, "usuario_id":1,"fecha_creacion":"2015-10-06"},
+{"cancion_id":2, "usuario_id":1,"fecha_elimininacion":"2015-10-30"}
+]}

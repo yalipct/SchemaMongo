@@ -1,0 +1,2 @@
+{"_id" : 1, "email": "demo@gmail.com", "password":"5678", "nombre": "jaimito", "fecha_nac": "2006-05-03",
+"sexo": "M", "pais": "canada", "cod_postal":08006, "tipo_usuario":"premium", "playlist":1,"lista_albums":[1,2],"lista_canciones":[1]}

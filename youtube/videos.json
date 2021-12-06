@@ -1,0 +1,6 @@
+{
+"_id" : 1, "titulo" : "fresa y chocolate", "descripcion": "nose", "tamaño" : 2,
+"nombre_archivo":"critica pelicula", "duracion": 40, "thumbnail":"foto.jpg",
+"reproducciones": 3, "likes":5, "dislikes" : 3, "estado":"public", 
+"etiquetas":[1], "usuario" : 1, "fecha_hora_publicacion" : "2021-05-03 15:25",
+"comentarios":[1]}
